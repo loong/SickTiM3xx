@@ -1,0 +1,1011 @@
+[FileInfo]
+CreatedBy=Eckelmann AG
+ModifiedBy=Eckelmann AG
+Description=EDS for Eckelmann FBM AIM-04
+FileVersion=1
+FileRevision=3
+CreationTime=04:00PM
+CreationDate=08-14-2000
+ModificationTime=08:00AM
+ModificationDate=07-29-2004
+FileName=EstAIM04.eds
+
+[DeviceInfo]
+VendorNumber=0x116
+ProductNumber=FBMAIM0401
+ProductVersion=1.05
+ProductRevision=1
+OrderCode=FBMAIM0401
+BaudRate_10=1
+BaudRate_20=1
+BaudRate_50=1
+BaudRate_100=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=0
+BaudRate_1000=1
+SimpleBootUpMaster=0
+ExtendedBootUpMaster=0
+SimpleBootUpSlave=1
+ExtendedBootupSlave=0
+Granularity=0x0
+DynamicChannelsSupported=0x0
+VendorName=Eckelmann AG
+ProductName=Eckelmann FBM AIM-04
+
+[StandardDataTypes]
+0x0001=1
+0x0002=0
+0x0003=0
+0x0004=0
+0x0005=1
+0x0006=1
+0x0007=1
+0x0008=0
+0x0009=1
+0x000A=0
+0x000B=0
+0x000C=0
+0x000D=0
+0x000E=0
+0x000F=0
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=0
+Dummy0003=0
+Dummy0004=0
+Dummy0005=0
+Dummy0006=0
+Dummy0007=0
+
+[Comments]
+Lines=0
+Line1=no comment
+
+[MandatoryObjects]
+SupportedObjects=2
+1=0x1000
+2=0x1001
+
+[1000]
+ParameterName=device type
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0x40191
+
+[1001]
+ParameterName=error register
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+PDOMapping=0
+
+[OptionalObjects]
+SupportedObjects=20
+1=0x1003
+2=0x1004
+3=0x1008
+4=0x1009
+5=0x100a
+6=0x100b
+7=0x100c
+8=0x100d
+9=0x100e
+10=0x1010
+11=0x1011
+12=0x1012
+13=0x1014
+14=0x1017
+15=0x1200
+16=0x1800
+17=0x1a00
+18=0x6401
+19=0x6420
+20=0x67fe
+
+[ManufacturerObjects]
+SupportedObjects=8
+1=0x2000
+2=0x2440
+3=0x2441
+4=0x3000
+5=0x3010
+6=0x3011
+7=0x3100
+8=0x3101
+
+[Tools]                 
+Items=0
+
+[1003]
+ParameterName=pre-defined error field
+ObjectType=8
+DataType=7
+AccessType=ro
+PDOMapping=0
+SubNumber=17
+
+[1003sub0]
+ParameterName=number of errors
+ObjectType=7
+DataType=5
+AccessType=rw
+PDOMapping=0
+DefaultValue=16
+PDOMapping=0
+
+[1003sub1]
+ParameterName=standard error field 1
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub2]
+ParameterName=standard error field 2
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub3]
+ParameterName=standard error field 3
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub4]
+ParameterName=standard error field 4
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub5]
+ParameterName=standard error field 5
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub6]
+ParameterName=standard error field 6
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub7]
+ParameterName=standard error field 7
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub8]
+ParameterName=standard error field 8
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub9]
+ParameterName=standard error field 9
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub10]
+ParameterName=standard error field 10
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub11]
+ParameterName=standard error field 11
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub12]
+ParameterName=standard error field 12
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub13]
+ParameterName=standard error field 13
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub14]
+ParameterName=standard error field 14
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub15]
+ParameterName=standard error field 15
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1003sub16]
+ParameterName=standard error field 16
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1004]
+ParameterName=number of PDOs supported
+ObjectType=8
+DataType=7
+AccessType=ro
+PDOMapping=0
+SubNumber=3
+
+[1004sub0]
+ParameterName=number of all PDOs supported
+ObjectType=7
+DataType=7
+LowLimit=0
+AccessType=ro
+DefaultValue=0x00000001
+PDOMapping=0
+
+[1004sub1]
+ParameterName=number of sync PDOs supported
+ObjectType=7
+DataType=7
+LowLimit=0
+AccessType=ro
+PDOMapping=0
+DefaultValue=0x00000000
+
+[1004sub2]
+ParameterName=number of async PDOs supported
+ObjectType=7
+DataType=7
+LowLimit=0
+AccessType=ro
+PDOMapping=0
+DefaultValue=0x00000001
+
+[1008]
+ParameterName=manufacturer device name
+ObjectType=7
+DataType=9
+AccessType=ro
+PDOMapping=0
+DefaultValue=
+
+[1009]
+ParameterName=manufacturer hardware version
+ObjectType=0x7
+DataType=0x9
+AccessType=ro
+PDOMapping=0
+DefaultValue=
+
+[100a]
+ParameterName=manufacturer software version
+ObjectType=7
+DataType=9
+AccessType=ro
+PDOMapping=0
+DefaultValue=1.05
+
+[100b]
+ParameterName=node ID
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+
+[100c]
+ParameterName=guard time
+ObjectType=7
+DataType=6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[100d]
+ParameterName=life time factor
+ObjectType=7
+DataType=5
+AccessType=rw
+PDOMapping=0
+DefaultValue=0
+
+[100e]
+ParameterName=guard COB-ID
+ObjectType=7
+DataType=7
+AccessType=rw
+PDOMapping=0
+DefaultValue=0x700+NodeID
+
+[1010]
+ParameterName=store parameters
+ObjectType=8
+DataType=7
+AccessType=rw
+PDOMapping=0
+SubNumber=4
+
+[1010sub0]
+ParameterName=largest subindex supported
+ObjectType=7
+DataType=5
+AccessType=ro
+PDOMapping=0
+DefaultValue=3
+
+[1010sub1]
+ParameterName=save all parameters
+ObjectType=7
+DataType=7
+AccessType=rw
+PDOMapping=0
+DefaultValue=1
+
+[1010sub2]
+ParameterName=save communication parameters
+ObjectType=7
+DataType=7
+AccessType=rw
+PDOMapping=0
+DefaultValue=1
+
+[1010sub3]
+ParameterName=save application parameters
+ObjectType=7
+DataType=7
+AccessType=rw
+PDOMapping=0
+DefaultValue=1
+
+[1011]
+ParameterName=restore default parameters
+ObjectType=8
+DataType=7
+AccessType=rw
+PDOMapping=0
+SubNumber=4
+
+[1011sub0]
+ParameterName=largest subindex supported
+ObjectType=7
+DataType=5
+AccessType=ro
+PDOMapping=0
+DefaultValue=3
+
+[1011sub1]
+ParameterName=restore all default parameters
+ObjectType=7
+DataType=7
+AccessType=rw
+PDOMapping=0
+DefaultValue=1
+
+[1011sub2]
+ParameterName=restore communication default parameters
+ObjectType=7
+DataType=7
+AccessType=rw
+PDOMapping=0
+DefaultValue=1
+
+[1011sub3]
+ParameterName=restore application default parameters
+ObjectType=7
+DataType=7
+AccessType=rw
+PDOMapping=0
+DefaultValue=1
+
+[1014]
+ParameterName=COB-ID time stamp message
+ObjectType=7
+DataType=7
+AccessType=rw
+PDOMapping=0
+DefaultValue=0x100
+
+[1014]
+ParameterName=COB-ID emergency message
+ObjectType=7
+DataType=7
+AccessType=rw
+PDOMapping=0
+DefaultValue=0x80+NodeID
+
+[1017]
+ParameterName=producer heartbeat time
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+DefaultValue=0
+
+[1200]
+ParameterName=server SDO parameter
+ObjectType=9
+DataType=0x22
+AccessType=ro
+PDOMapping=0
+SubNumber=3
+
+[1200sub0]
+ParameterName=number of entries
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[1200sub1]
+ParameterName=COB-ID client->server (rx)
+ObjectType=7
+DataType=7
+AccessType=ro
+DefaultValue=0x600+NodeID
+PDOMapping=0
+
+[1200sub2]
+ParameterName=COB-ID server->client (tx)
+ObjectType=7
+DataType=7
+AccessType=ro
+DefaultValue=0x580+NodeID
+PDOMapping=0
+
+[1800]
+ParameterName=1. transmit PDO parameter
+ObjectType=9
+DataType=0x20
+AccessType=rw
+PDOMapping=0
+SubNumber=5
+
+[1800sub0]
+ParameterName=largest subindex supported
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[1800sub1]
+ParameterName=COB-ID used by PDO
+ObjectType=7
+DataType=7
+AccessType=rw
+DefaultValue=0x180+NodeID
+PDOMapping=0
+
+[1800sub2]
+ParameterName=transmission type
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=255
+PDOMapping=0
+
+[1800sub3]
+ParameterName=inhibit time
+ObjectType=7
+DataType=6
+AccessType=ro
+PDOMapping=0
+DefaultValue=0
+
+[1800sub4]
+ParameterName=CMS priority group
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1a00]
+ParameterName=1. transmit PDO mapping
+ObjectType=9
+DataType=0x21
+AccessType=rw
+PDOMapping=0
+SubNumber=5
+
+[1a00sub0]
+ParameterName=number of mapped objects
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[1a00sub1]
+ParameterName=1. mapped object
+ObjectType=7
+DataType=7
+AccessType=ro
+DefaultValue=0x64010110
+PDOMapping=0
+
+[1a00sub2]
+ParameterName=2. mapped object
+ObjectType=7
+DataType=7
+AccessType=ro
+DefaultValue=0x64010210
+PDOMapping=0
+
+[1a00sub3]
+ParameterName=3. mapped object
+ObjectType=7
+DataType=7
+AccessType=ro
+DefaultValue=0x64010310
+PDOMapping=0
+
+[1a00sub4]
+ParameterName=4. mapped object
+ObjectType=7
+DataType=7
+AccessType=ro
+DefaultValue=0x64010410
+PDOMapping=0
+
+[6401]
+ParameterName=read analogue input 16-bit
+ObjectType=8
+DataType=6
+AccessType=ro
+PDOMapping=0
+SubNumber=4
+
+[6401sub0]
+ParameterName=number of analogue input 16-bit
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[6401sub1]
+ParameterName=1. analogue input
+ObjectType=7
+DataType=6
+AccessType=ro
+PDOMapping=1
+
+[6401sub2]
+ParameterName=2. analogue input
+ObjectType=7
+DataType=6
+AccessType=ro
+PDOMapping=1
+
+[6401sub3]
+ParameterName=3. analogue input
+ObjectType=7
+DataType=6
+AccessType=ro
+PDOMapping=1
+
+[6401sub4]
+ParameterName=4. analogue input
+ObjectType=7
+DataType=6
+AccessType=ro
+PDOMapping=1
+
+[6420]
+ParameterName=analogue input range
+ObjectType=8
+DataType=6
+AccessType=ro
+PDOMapping=0
+SubNumber=3
+
+[6420sub0]
+ParameterName=number of analogue input 16-bit
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[6420sub1]
+ParameterName=1. analogue input range
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[6420sub2]
+ParameterName=2. analogue input range
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[6420sub3]
+ParameterName=3. analogue input range
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[6420sub4]
+ParameterName=4. analogue input range
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[67FE]
+ParameterName=error behaviour
+ObjectType=8
+DataType=5
+AccessType=rw
+PDOMapping=0
+SubNumber=2
+
+[67FEsub0]
+ParameterName=number of error classes
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[67FEsub1]
+ParameterName=communication error
+ObjectType=7
+DataType=5
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[2000]
+ParameterName=life LED control
+ObjectType=8
+DataType=5
+AccessType=rw
+PDOMapping=0
+SubNumber=2
+
+[2000sub0]
+ParameterName=number of life LED control
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[2000sub1]
+ParameterName=set life LED control
+ObjectType=7
+DataType=5
+AccessType=rw
+PDOMapping=0
+DefaultValue=0
+
+[2440]
+ParameterName=analogue input scaling
+ObjectType=8
+DataType=7
+AccessType=ro
+PDOMapping=0
+SubNumber=5
+
+[2440sub0]
+ParameterName=number of analogue input
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[2440sub1]
+ParameterName=1. analogue input scaling
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+
+[2440sub2]
+ParameterName=2. analogue input scaling
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+
+[2440sub3]
+ParameterName=3. analogue input scaling
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+
+[2440sub4]
+ParameterName=4. analogue input scaling
+ObjectType=7
+DataType=7
+AccessType=ro
+PDOMapping=0
+
+[2441]
+ParameterName=analogue input offset
+ObjectType=8
+DataType=6
+AccessType=ro
+PDOMapping=0
+SubNumber=5
+
+[2441sub0]
+ParameterName=number of analogue input
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[2441sub1]
+ParameterName=1. analogue input offset
+ObjectType=7
+DataType=6
+AccessType=ro
+PDOMapping=0
+
+[2441sub2]
+ParameterName=2. analogue input offset
+ObjectType=7
+DataType=6
+AccessType=ro
+PDOMapping=0
+
+[2441sub3]
+ParameterName=3. analogue input offset
+ObjectType=7
+DataType=6
+AccessType=ro
+PDOMapping=0
+
+[2441sub4]
+ParameterName=4. analogue input offset
+ObjectType=7
+DataType=6
+AccessType=ro
+PDOMapping=0
+
+[3000]
+ParameterName=analogue input adjust min value
+ObjectType=8
+DataType=6
+AccessType=rw
+PDOMapping=0
+SubNumber=5
+
+[3000sub0]
+ParameterName=number of analogue input
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[3000sub1]
+ParameterName=1. analogue input adjust min value
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3000sub2]
+ParameterName=2. analogue input adjust min value
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3000sub3]
+ParameterName=3. analogue input adjust min value
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3000sub4]
+ParameterName=4. analogue input adjust min value
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3010]
+ParameterName=analogue input adjust max value
+ObjectType=8
+DataType=6
+AccessType=rw
+PDOMapping=0
+SubNumber=5
+
+[3010sub0]
+ParameterName=number of analogue input
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[3010sub1]
+ParameterName=1. analogue input adjust max value
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3010sub2]
+ParameterName=2. analogue input adjust max value
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3010sub3]
+ParameterName=3. analogue input adjust max value
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3010sub4]
+ParameterName=4. analogue input adjust max value
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3011]
+ParameterName=analogue input adjusted 
+ObjectType=8
+DataType=5
+AccessType=rw
+PDOMapping=0
+SubNumber=5
+
+[3011sub0]
+ParameterName=number of analogue input
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[3011sub1]
+ParameterName=1. analogue input adjusted
+ObjectType=7
+DataType=5
+AccessType=rw
+PDOMapping=0
+
+[3011sub2]
+ParameterName=2. analogue input adjusted
+ObjectType=7
+DataType=5
+AccessType=rw
+PDOMapping=0
+
+[3011sub3]
+ParameterName=3. analogue input adjusted
+ObjectType=7
+DataType=5
+AccessType=rw
+PDOMapping=0
+
+[3011sub4]
+ParameterName=4. analogue input adjusted
+ObjectType=7
+DataType=5
+AccessType=rw
+PDOMapping=0
+
+[3100]
+ParameterName=analogue input filter setup 
+ObjectType=8
+DataType=5
+AccessType=rw
+PDOMapping=0
+SubNumber=3
+
+[3100sub1]
+ParameterName=analogue input mean value setup
+ObjectType=7
+DataType=5
+AccessType=rw
+PDOMapping=0
+
+[3100sub2]
+ParameterName=analogue input filter type
+ObjectType=7
+DataType=5
+AccessType=rw
+PDOMapping=0
+
+[3101]
+ParameterName=analogue input interrupt delta 
+ObjectType=8
+DataType=6
+AccessType=rw
+PDOMapping=0
+SubNumber=5
+
+[3101sub0]
+ParameterName=number of analogue input
+ObjectType=7
+DataType=5
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[3101sub1]
+ParameterName=1. analogue input interrupt delta
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3101sub2]
+ParameterName=2. analogue input interrupt delta
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3101sub3]
+ParameterName=3. analogue input interrupt delta
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0
+
+[3101sub4]
+ParameterName=4. analogue input interrupt delta
+ObjectType=7
+DataType=6
+AccessType=rw
+PDOMapping=0

@@ -1,0 +1,33 @@
+/**
+ * \mainpage SocketCan Klassen
+ *
+ * \section intro Beschreibung
+ *
+ * Das Projekt beinhaltet eine Sammlung von Klassen zum Senden und Empfangen, sowie zur Konfiguration von 
+ * can-Frames über die socketCan Schnittstelle des Linux-Kernels 
+ * 
+ *   
+ *
+ *
+ *
+ * \section require Requirements 
+ *	<OL>
+ *  <LI> Installiertes socketcan 
+ *  <LI> Threads fieldrobot.sourceforge.net</LI>
+ *	</OL>
+ *  Die erforderlichen Eclipse-Projekte müssen im gleichen Eclipse-Workspace
+ *  ausgecheckt werden, damit die Suchpfade der Makefiles stimmen
+ *
+ * \section build Compilieren des Projektes
+ *
+ * Das Makefile befindet sich im Ordner src.
+ * Zu Beginn erst zweimal make depend ausführen
+ * anschließend genügt ein einfaches make.
+ *
+ * Werden dem Projekt neue Klassen hinzugefügt, muss erneut make depend
+ * ausgeführt werden.
+ * 
+ * \section home Projekt-Homepage
+ * 
+ * fieldrobot.sourceforge.net
+ */

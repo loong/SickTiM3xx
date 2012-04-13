@@ -1,0 +1,891 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                             ;
+; Integrated: BMSx xxx1N24B12/00xxx     ;
+;                                                             ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[FileInfo]
+FileName=BMSxInt.EDS
+FileVersion=1
+FileRevision=2
+EDSVersion=4.0
+Description=EDS file for CANopen Magres ST
+CreationTime=04:10PM
+CreationDate=11-12-2002
+CreatedBy=Simon Jaeger
+ModificationTime=04:10PM
+ModificationDate=06-20-2005
+ModifiedBy=Simon Jaeger
+
+[Comments]
+Lines=0
+
+[DeviceInfo]
+VendorName=Baumer Electric
+VendorNumber=0x5F
+ProductName=BMSx xxx1N24B12/00xxx
+ProductNumber=23
+OrderCode=BMSx xxx1N24B12/00xxx
+Baudrate_10=1
+Baudrate_20=1
+Baudrate_50=1
+Baudrate_100=1
+Baudrate_125=1
+Baudrate_250=1
+Baudrate_500=1
+Baudrate_800=1
+Baudrate_1000=1
+SimpleBootUpMaster=0
+SimpleBootUpSlave=1
+Granularity=0
+DynamicChannelsSupported=0
+GroupMessaging=0
+NrOfRXPDO=0
+NrOfTXPDO=2
+LSS_Supported=1
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=0
+Dummy0003=0
+Dummy0004=1
+Dummy0005=1
+Dummy0006=1
+Dummy0007=1
+
+
+;-----------------------------------
+
+;SubNumber=
+;ParameterName=
+;ObjectType=
+;DataType=
+;LowLimit=
+;HighLimit=
+;AccessType=
+;DefaultValue=
+;PDOMapping=
+;ObjFlags=
+
+PDOMapping: 0
+Index: 1017
+Subindex: 0
+ParameterName: Producer heartbeat time
+ObjectType: 0x7
+DataType: 0x0006
+AccessType: rw
+DefaultValue: 0x00
+PDOMapping: 0
+Index: 1029
+
+;-----------------------------------
+
+
+[MandatoryObjects]
+SupportedObjects=0x03
+1=0x1000
+2=0x1001
+3=0x1018
+
+
+
+[1000]
+ParameterName=Device type
+ObjectType=0x07
+DataType=0x07
+AccessType=ro
+DefaultValue=0x00010196
+PDOMapping=0
+
+[1001]
+ParameterName=Error register
+ObjectType=0x07
+DataType=0x0005
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1018]
+SubNumber=5
+ParameterName=Identity object
+ObjectType=0x09
+
+[1018sub0]
+ParameterName=Largest supported subindex
+ObjectType=0x07
+DataType=0x0005
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[1018sub1]
+ParameterName=VendorID
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x5F
+PDOMapping=0
+
+[1018sub2]
+ParameterName=Product code
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x17
+PDOMapping=0
+
+[1018sub3]
+ParameterName=Revision number
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00010004
+PDOMapping=0
+
+[1018sub4]
+ParameterName=Serial number
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+
+;-----------------------------------
+
+
+[OptionalObjects]
+SupportedObjects=35
+1=0x1002
+2=0x1003
+3=0x1005
+4=0x1008
+5=0x1009
+6=0x100A
+7=0x100C
+8=0x100D
+9=0x1010
+10=0x1011
+11=0x1014
+12=0x1016
+13=0x1017
+14=0x1029
+15=0x1800
+16=0x1801
+17=0x1A00
+18=0x1A01
+
+19=0x6000
+20=0x6001
+21=0x6002
+22=0x6003
+23=0x6004
+24=0x6200
+25=0x6500
+26=0x6501
+27=0x6502
+28=0x6503
+29=0x6504
+30=0x6505
+31=0x6506
+32=0x6507
+33=0x6508
+34=0x6509
+35=0x650B
+
+
+
+[1002]
+ParameterName=Manufacturer status register
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1003]
+SubNumber=9
+ParameterName=Pre-defined error field
+ObjectType=0x08
+
+[1003sub0]
+ParameterName=Number of errors
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1003sub1]
+ParameterName=Standard error field 1
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1003sub2]
+ParameterName=Standard error field 2
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1003sub3]
+ParameterName=Standard error field 3
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1003sub4]
+ParameterName=Standard error field 4
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1003sub5]
+ParameterName=Standard error field 5
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1003sub6]
+ParameterName=Standard error field 6
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1003sub7]
+ParameterName=Standard error field 7
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1003sub8]
+ParameterName=Standard error field 8
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1005]
+ParameterName=COB-ID SYNC message
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x80
+PDOMapping=0
+
+[1008]
+ParameterName=Device name
+ObjectType=0x7
+DataType=0x0009
+AccessType=const
+DefaultValue=BMSx
+PDOMapping=0
+
+[1009]
+ParameterName=Hardware version
+ObjectType=0x7
+DataType=0x0009
+AccessType=const
+DefaultValue=1.00
+PDOMapping=0
+
+[100A]
+ParameterName=Software version
+ObjectType=0x7
+DataType=0x0009
+AccessType=const
+DefaultValue=1.05
+PDOMapping=0
+
+[100C]
+ParameterName=Guard time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x0000
+PDOMapping=0
+
+[100D]
+ParameterName=Life time factor
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[1010]
+SubNumber=5
+ParameterName=Store parameters
+ObjectType=0x8
+
+[1010sub0]
+ParameterName=Largest supported subindex
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[1010sub1]
+ParameterName=Save all parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1010sub2]
+ParameterName=Save communication parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1010sub3]
+ParameterName=Save application parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1010sub4]
+ParameterName=Save manufactory parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1011]
+SubNumber=5
+ParameterName=Restore default parameters
+ObjectType=0x8
+
+[1011sub0]
+ParameterName=Largest supported subindex
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[1011sub1]
+ParameterName=Restore all default parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1011sub2]
+ParameterName=Restore default communication parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1011sub3]
+ParameterName=Restore default application parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1011sub4]
+ParameterName=Restore default manufactory parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1014]
+ParameterName=Emergency COB-ID
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x80
+PDOMapping=0
+
+[1016]
+SubNumber=2
+ParameterName=Consumer heartbeat time
+ObjectType=0x8
+
+[1016sub0]
+ParameterName=Largest supported subindex
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[1016sub1]
+ParameterName=Consumer heartbeat time
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1017]
+ParameterName=Producer heartbeat time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[1029]
+SubNumber=2
+ParameterName=Error behaviour
+ObjectType=0x8
+
+[1029sub0]
+ParameterName=Largest supported subindex
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[1029sub1]
+ParameterName=Communication error
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1800]
+SubNumber=4
+ParameterName=1st transmit PDO communication parameter
+ObjectType=0x9
+
+[1800sub0]
+ParameterName=Largest supported subindex
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1800sub1]
+ParameterName=COB-ID used by PDO
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x180
+PDOMapping=0
+
+[1800sub2]
+ParameterName=Transmission type
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=254
+PDOMapping=0
+
+[1800sub5]
+ParameterName=Event time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x0000
+PDOMapping=0
+
+[1801]
+SubNumber=4
+ParameterName=2nd transmit PDO communication parameter
+ObjectType=0x9
+
+[1801sub0]
+ParameterName=Largest supported subindex
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1801sub1]
+ParameterName=COB-ID used by PDO
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x280
+PDOMapping=0
+
+[1801sub2]
+ParameterName=Transmission type
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x02
+PDOMapping=0
+
+[1801sub5]
+ParameterName=Event time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x0000
+PDOMapping=0
+
+[1A00]
+SubNumber=2
+ParameterName=Transmit PDO1 mapping
+ObjectType=0x8
+
+[1A00sub0]
+ParameterName=Number of mapped application objects in PDO
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[1A00sub1]
+ParameterName=PDO mapping for the 1st application object to be mapped
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x6004
+PDOMapping=0
+
+[1A01]
+SubNumber=2
+ParameterName=Transmit PDO2 mapping 
+ObjectType=0x8
+
+[1A01sub0]
+ParameterName=Number of mapped application objects in PDO
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[1A01sub1]
+ParameterName=PDO mapping for the 2nd application object to be mapped
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x6004
+PDOMapping=0
+
+[6000]
+ParameterName=Operating parameters
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x04
+PDOMapping=0
+
+[6001]
+ParameterName=Measuring units per revolution
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00001000
+PDOMapping=0
+
+[6002]
+ParameterName=Total measuring range in measuring units
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00001000
+PDOMapping=0
+
+[6003]
+ParameterName=Preset value
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6004]
+ParameterName=Position value
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[6200]
+ParameterName=Cyclic timer for PDO1 
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x203
+PDOMapping=0
+
+[6500]
+ParameterName=Operating status
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0x04
+PDOMapping=0
+
+[6501]
+ParameterName=Max. measuring units per revolution
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00004000
+PDOMapping=0
+
+[6502]
+ParameterName=Max. measuring range in measuring units
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00004000
+PDOMapping=0
+
+[6503]
+ParameterName=Alarms
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6504]
+ParameterName=Supported alarms
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0x01
+PDOMapping=0
+
+[6505]
+ParameterName=Warnings
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6506]
+ParameterName=Supported warnings
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0x04
+PDOMapping=0
+
+[6507]
+ParameterName=Profile and software version
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x01050201
+PDOMapping=0
+
+[6508]
+ParameterName=Operating time
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6509]
+ParameterName=Offset value
+ObjectType=0x7
+DataType=0x0004
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+
+[650B]
+ParameterName=Seriel number
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+
+;-----------------------------------
+
+
+[ManufacturerObjects]
+SupportedObjects=7
+1=0x2100
+2=0x2101
+3=0x2110
+4=0x2201
+5=0x2300
+6=0x2800
+7=0x2801
+
+
+[2100]
+ParameterName=Baud rate
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x02
+PDOMapping=0
+
+[2101]
+ParameterName=NodeId
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=$NODEID+
+PDOMapping=0
+
+[2110]
+ParameterName=Versions control
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000008
+PDOMapping=0
+
+[2201]
+SubNumber=4
+ParameterName=Drive data
+ObjectType=0x9
+
+[2201sub0]
+ParameterName=Largest supported subindex
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[2201sub1]
+ParameterName=Number of position error
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00
+PDOMapping=0
+
+[2201sub2]
+ParameterName=Time in seconds
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[2201sub3]
+ParameterName=Watchdog counter
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[2300]
+SubNumber=8
+ParameterName=Customer EEPROM
+ObjectType=0x8
+
+[2300sub0]
+ParameterName=Largest supported subindex
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=7
+PDOMapping=0
+
+[2300sub1]
+ParameterName=Data0
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[2300sub2]
+ParameterName=Data1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[2300sub3]
+ParameterName=Data2
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[2300sub4]
+ParameterName=Data3
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[2300sub5]
+ParameterName=Data4
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[2300sub6]
+ParameterName=Data5
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[2300sub7]
+ParameterName=Data6
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[2800]
+ParameterName=PDO1 addition event trigger
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
+
+[2801]
+ParameterName=PDO2 addition event trigger
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0x00
+PDOMapping=0
