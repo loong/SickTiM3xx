@@ -57,39 +57,12 @@ Idefix::Idefix(ConfigFile* cf, int section)
 	can_interface_name = cf->ReadString(section, "can_interface_name", CAN_INTERFACE_NAME);
 
 	my_drives.setCanInterfaceName(can_interface_name);
-	aim.setCanInterfaceName(can_interface_name);
 
 	gamepad_max_speed_m_s=cf->ReadFloat(section,"gamepad_max_speed_m_s",0.1);
 	main_loop_sleep_time_us=cf->ReadFloat(section,"main_loop_sleep_time_us",50000);
 
-
-	// Sonar geometry.
-	sonar0[0] = cf->ReadTupleLength(section, "sonar0", 0, -0.32);
-	sonar0[1] = cf->ReadTupleLength(section, "sonar0", 1, -0.1);
-	sonar0[2] = cf->ReadTupleLength(section, "sonar0", 2, 135);
-
-	sonar1[0] = cf->ReadTupleLength(section, "sonar1", 0, 0.32);
-	sonar1[1] = cf->ReadTupleLength(section, "sonar1", 1, -0.1);
-	sonar1[2] = cf->ReadTupleLength(section, "sonar1", 2, 45);
-
-	sonar2[0] = cf->ReadTupleLength(section, "sonar2", 0, 0.32);
-	sonar2[1] = cf->ReadTupleLength(section, "sonar2", 1, 0.1);
-	sonar2[2] = cf->ReadTupleLength(section, "sonar2", 2, 315);
-
-	sonar3[0] = cf->ReadTupleLength(section, "sonar3", 0, -0.32);
-	sonar3[1] = cf->ReadTupleLength(section, "sonar3", 1, 0.1);
-	sonar3[2] = cf->ReadTupleLength(section, "sonar3", 2, 225);
-
-	sonarArr[0]=sonar0;
-	sonarArr[1]=sonar1;
-	sonarArr[2]=sonar2;
-	sonarArr[3]=sonar3;
-
 	std::cout << "Setting up The Drives" <<std::endl;
 	my_drives.config_Drives();
-
-	std::cout << "Setting up Ultrasonic" <<std::endl;
-	aim.config();
 
   // Create my position interface
   if (cf->ReadDeviceAddr(&(this->m_position_addr), section,
@@ -103,23 +76,6 @@ Idefix::Idefix(ConfigFile* cf, int section)
     this->SetError(-1);
     return;
   }
-
-
-
-  // Create my sonar interface
-  if (cf->ReadDeviceAddr(&(this->m_sonar_addr), section,
-                         "provides", PLAYER_SONAR_CODE, -1, NULL) != 0)
-  {
-    this->SetError(-1);
-    return;
-  }
-
-  if (this->AddInterface(this->m_sonar_addr))
-  {
-    this->SetError(-1);
-    return;
-  }
-
 
 
   // Look for Joystik Interface
@@ -227,9 +183,7 @@ void Idefix::Main()
 
 
     // Send out new messages with Driver::Publish()
-    //
     PublishPosition();
-    PublishSonar();
     PublishOpaque();
 
 
@@ -253,11 +207,6 @@ int Idefix::ProcessMessage(QueuePointer & resp_queue,
 
 	}
 
-	else if(handle_sonar_Interface_messages(resp_queue,hdr,data)==0) {
-
-		return 0;
-
-	}
 	else if(handle_joystick_Interface_messages(resp_queue,hdr,data)==0) {
 
 		return 0;
@@ -369,41 +318,7 @@ int  Idefix::handle_position2d_Interface_messages(QueuePointer & resp_queue,play
 
 
 }
-int  Idefix::handle_sonar_Interface_messages(QueuePointer & resp_queue,player_msghdr * hdr,void * data){
 
-	//sonar geometry
-	if(Message::MatchMessage(hdr,PLAYER_MSGTYPE_REQ,PLAYER_SONAR_REQ_GET_GEOM,m_sonar_addr)){
-
-		puts("PLAYER_SONAR_REQ_GET_GEOM received");
-
-		player_sonar_geom_t geom;
-		memset(&geom,0,sizeof(geom));
-
-		geom.poses_count = 4;
-		geom.poses = new player_pose3d_t[geom.poses_count];
-		//memset(geom.poses, 0, sizeof(player_pose3d_t) * geom.poses_count);
-
-		if(debug) puts("nach set poses count");
-
-		for(int i=0; i<4; i++){
-			geom.poses[i].px=sonarArr[i][0];
-			geom.poses[i].py=sonarArr[i][1];
-			geom.poses[i].pyaw=DTOR(sonarArr[i][2]);
-
-			geom.poses[i].proll=0;
-			geom.poses[i].ppitch=0;
-			geom.poses[i].pz=0.1;
-		}
-
-		if(debug) puts("vor publish");
-		Publish(m_sonar_addr, PLAYER_MSGTYPE_RESP_ACK,PLAYER_SONAR_REQ_GET_GEOM,(void *) &geom);
-		if(debug) puts("nach publish");
-		return(0);
-	}
-
-	return -1;
-
-}
 int  Idefix::handle_joystick_Interface_messages(QueuePointer & resp_queue,player_msghdr * hdr,void * data){
 
 	if(Message::MatchMessage(hdr,PLAYER_MSGTYPE_DATA,PLAYER_JOYSTICK_DATA_STATE, m_joystick_addr)){
@@ -577,29 +492,6 @@ int  Idefix::handle_opaque_0_Interface_messages(QueuePointer & resp_queue,player
 	//		return 0;
 	//
 	//	}
-
-
-
-
-}
-
-
-
-
-void Idefix::PublishSonar(){
-
-	player_sonar_data data;
-	memset(&data,0,sizeof(data)); //initialisiert mit 0
-	data.ranges_count=4;
-
-	float my_ranges[data.ranges_count];
-
-	aim.get_ranges(my_ranges); //my_ranges wird befüllt;
-	data.ranges = my_ranges;
-
-	if(debug) puts("vor ranges publish");
-	this->Publish(this->m_sonar_addr, PLAYER_MSGTYPE_DATA, PLAYER_SONAR_DATA_RANGES, (void *) &data);
-	if(debug) puts("nach ranges publish");
 
 }
 
