@@ -5,8 +5,8 @@
  *      Author: locher
  */
 
-#ifndef MEASUREMENTDATASETPARSER_H_
-#define MEASUREMENTDATASETPARSER_H_
+#ifndef TIM3XX_DATA_PARSER_H_
+#define TIM3XX_DATA_PARSER_H_
 
 #include <iostream>
 #include <cstdlib>
@@ -14,7 +14,7 @@
 #include <string>
 #include <sstream>
 
-class Measurement_Dataset_Parser {
+class TiM3xx_Data_Parser {
 
 private:
 
@@ -22,8 +22,8 @@ private:
 	int	data_size;
 
 public:
-	Measurement_Dataset_Parser();
-	virtual ~Measurement_Dataset_Parser();
+	TiM3xx_Data_Parser();
+	virtual ~TiM3xx_Data_Parser();
 
 
 	char kommandoart[4];
@@ -67,4 +67,4 @@ public:
 
 };
 
-#endif /* MEASUREMENTDATASETPARSER_H_ */
+#endif /* TIM3XX_DATA_PARSER_H_ */

@@ -20,7 +20,7 @@
 #include <cstdlib>
 
 
-#include <MeasurementDatasetParser.h>
+#include "TiM3xxDataParser.h"
 
 
 struct dataset{
@@ -251,7 +251,7 @@ int main(int argc, char **argv) {
 
 
 
-		Measurement_Dataset_Parser mdp;
+		TiM3xx_Data_Parser mdp;
 
 
 		for (int i = 0; i < 10; ++i) {

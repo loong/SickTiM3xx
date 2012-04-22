@@ -35,6 +35,8 @@ CXX = g++
 
 CXXFLAGS = -O2 -g -Wall -fmessage-length=0 -fPIC\
 	 -lusb-1.0										\
+	 `pkg-config --libs playerc++` -lrt				\
+     `pkg-config --cflags playerc++`				\
 	 $(INCLUDEDIRS) 
 
 
@@ -53,7 +55,8 @@ CXXFLAGS = -O2 -g -Wall -fmessage-length=0 -fPIC\
 # mit make clean leicht geloescht werden koennen
 
 all: 					\
-	libusb_test		\
+	libusb_test			\
+	libsicktim3xx.so	\
 
 # $< der Name der Ersten Abhängigkeit  
 # $@ der Name des Targets 
@@ -62,6 +65,11 @@ all: 					\
 libusb_test: libusb_test.cpp $(OBJS) 
 	$(CXX)  $(CXXFLAGS) $< $(OBJS_AND_PATH) -o ../bin/$@
 		
+
+
+
+libsicktim3xx.so: $(OBJS) 
+	$(CXX) $(CXXFLAGS) $(OBJS_AND_PATH) ../objs/SickTiM3xx.o  -shared -o ../libs/$@
 
 	
 

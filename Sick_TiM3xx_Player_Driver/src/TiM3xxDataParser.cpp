@@ -5,18 +5,18 @@
  *      Author: locher
  */
 
-#include "MeasurementDatasetParser.h"
+#include "TiM3xxDataParser.h"
 
-Measurement_Dataset_Parser::Measurement_Dataset_Parser() {
+TiM3xx_Data_Parser::TiM3xx_Data_Parser() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Measurement_Dataset_Parser::~Measurement_Dataset_Parser() {
+TiM3xx_Data_Parser::~TiM3xx_Data_Parser() {
 	// TODO Auto-generated destructor stub
 }
 
-void Measurement_Dataset_Parser::set_pointer_to_data_buf(uint8_t* data_buf_ptr, int the_data_size){
+void TiM3xx_Data_Parser::set_pointer_to_data_buf(uint8_t* data_buf_ptr, int the_data_size){
 
 	actual_data_ptr=data_buf_ptr;
 	data_size=the_data_size;
@@ -25,7 +25,7 @@ void Measurement_Dataset_Parser::set_pointer_to_data_buf(uint8_t* data_buf_ptr, 
 }
 
 
-void Measurement_Dataset_Parser::parse_data(){
+void TiM3xx_Data_Parser::parse_data(){
 
 	// check termination of Buf
 	if(actual_data_ptr[data_size]!=0){
@@ -90,7 +90,7 @@ void Measurement_Dataset_Parser::parse_data(){
 }
 
 
-void Measurement_Dataset_Parser::print_data(){
+void TiM3xx_Data_Parser::print_data(){
 
 
 	std::cout.precision(5);
