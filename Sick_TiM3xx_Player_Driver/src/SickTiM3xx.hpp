@@ -74,7 +74,9 @@
 #include <player-3.0/libplayerc++/playerc++.h>
 #include <iostream>
 
+#include  <libusb-1.0/libusb.h>
 
+#include "TiM3xxDataParser.h"
 
 /**
  * The SICK Tim3xx Device Class
@@ -86,6 +88,7 @@ public:
 
 	// MessageHandler
 	int ProcessMessage(QueuePointer &resp_queue, player_msghdr* hdr,void* data);
+
 private:
 	// Main function for device thread.
 	virtual void Main();
@@ -95,6 +98,36 @@ private:
 	// Destructor
 	virtual ~SickTim3xx();
 
+
+	// USB Stuff
+	static const uint16_t VENDOR_ID=0x19A2;
+	static const uint16_t PRODUCT_ID=0x5001;
+
+	static const int the_usb_interface_number=0;
+
+	static const uint8_t	DATA_STX=2; //Start of text
+	static const uint8_t	DATA_ETX=3; // End of Text
+
+
+	static  uint8_t start_continuous_scan[19];//={DATA_STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','1',DATA_ETX};
+	static uint8_t stop_continuous_scan[19];//={DATA_STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','0',DATA_ETX};
+
+
+	static const uint8_t	read_endpoint=129;
+	static const uint8_t	write_endpoint=2;
+	static const unsigned int timeout_millis=10000;
+
+	int transferred_data_size;
+
+	uint8_t receive_buf[2049];
+
+
+
+	libusb_device_handle* m_usb_device_handle;
+	libusb_context* m_usb_context;
+
+
+	TiM3xx_Data_Parser m_data_parser;
 
 	// Laser pose in robot coordinate system.
 	double pose[3];

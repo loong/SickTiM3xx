@@ -23,20 +23,6 @@
 #include "TiM3xxDataParser.h"
 
 
-struct dataset{
-
-	char kommandoart[3];
-	char kommando[11];
-	uint16_t verionsnummer;
-	uint16_t geraetenummer;
-
-
-
-
-
-};
-
-
 void printdev(libusb_device *dev) {
 
 	libusb_device_descriptor desc;
@@ -139,17 +125,17 @@ int main(int argc, char **argv) {
 	#define PRODUCTID 0x5001
 
 
-	libusb_device_handle* m_device_handle = libusb_open_device_with_vid_pid(m_context, VENDORID, PRODUCTID);
+	libusb_device_handle* m_usb_device_handle = libusb_open_device_with_vid_pid(m_context, VENDORID, PRODUCTID);
 //	libusb_device_handle* m_device_handle = libusb_open_device_with_vid_pid(m_context, 0x05e3,0x1205);
 
-	if( !m_device_handle){
+	if( !m_usb_device_handle){
 
 			std::cerr << "Error open device:" <<  std::endl;
 	}else{
 
 
 
-		libusb_device* m_device =libusb_get_device(m_device_handle);
+		libusb_device* m_device =libusb_get_device(m_usb_device_handle);
 
 		printdev(m_device);
 
@@ -159,13 +145,13 @@ int main(int argc, char **argv) {
 		std::cout << " Endpoint Adresses 129 and 2, does thes mean we have Adress 2 with different directions? " << std::endl;
 
 		// Our only available interface number
-		int interface_number=0;
+		int the_usb_interface_number=0;
 
-		if(libusb_kernel_driver_active(m_device_handle,interface_number)){
+		if(libusb_kernel_driver_active(m_usb_device_handle,the_usb_interface_number)){
 
 			std::cout << "Error: Kernel driver found" << std::endl;
 
-			if (int error=libusb_detach_kernel_driver(m_device_handle,interface_number)){
+			if (int error=libusb_detach_kernel_driver(m_usb_device_handle,the_usb_interface_number)){
 				std::cout << "Detaching Kernel Driver failed " << libusb_error_name(error) << std::endl;
 				exit(EXIT_FAILURE);
 			}
@@ -177,7 +163,7 @@ int main(int argc, char **argv) {
 
 
 		// Now we claim the device
-		int error = libusb_claim_interface(m_device_handle,interface_number);
+		int error = libusb_claim_interface(m_usb_device_handle,the_usb_interface_number);
 		if(error){
 
 			std::cout << "Claiming interface failed " << libusb_error_name(error) << std::endl;
@@ -186,13 +172,13 @@ int main(int argc, char **argv) {
 		}
 
 
-		static const uint8_t	STX=2; //Start of text
-		static const uint8_t	ETX=3; // End of Text
+		static const uint8_t	DATA_STX=2; //Start of text
+		static const uint8_t	DATA_ETX=3; // End of Text
 
-		uint8_t start_one_scan[]={STX,'s','R','N',' ','L','M','D','s','c','a','n','d','a','t','a',ETX};
+		uint8_t start_one_scan[]={DATA_STX,'s','R','N',' ','L','M','D','s','c','a','n','d','a','t','a',DATA_ETX};
 
-		uint8_t start_continuous_scan[]={STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','1',ETX};
-		uint8_t stop_continuous_scan[]={STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','0',ETX};
+		uint8_t start_continuous_scan[]={DATA_STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','1',DATA_ETX};
+		uint8_t stop_continuous_scan[]={DATA_STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','0',DATA_ETX};
 
 
 
@@ -209,7 +195,7 @@ int main(int argc, char **argv) {
 
 
 			error =libusb_bulk_transfer(
-					m_device_handle,
+					m_usb_device_handle,
 					write_endpoint,
 //					start_one_scan,
 //					sizeof(start_one_scan),
@@ -230,7 +216,7 @@ int main(int argc, char **argv) {
 			// Receive acknoledge
 
 			error =libusb_bulk_transfer(
-					m_device_handle,
+					m_usb_device_handle,
 					read_endpoint,
 					receive_buf ,
 					sizeof(receive_buf)-1, // leave one for termination
@@ -258,7 +244,7 @@ int main(int argc, char **argv) {
 
 
 			error =libusb_bulk_transfer(
-					m_device_handle,
+					m_usb_device_handle,
 					read_endpoint,
 					receive_buf ,
 					sizeof(receive_buf)-1, // leave one for termination
@@ -277,7 +263,7 @@ int main(int argc, char **argv) {
 			// String terminierung
 			receive_buf[transferred_data_size]=0;
 
-			if(receive_buf[0]!=STX){ // read from device buff until it is empty, and next data set starts with STX-Code
+			if(receive_buf[0]!=DATA_STX){ // read from device buff until it is empty, and next data set starts with STX-Code
 				std::cout << ".";
 			}else{
 //				std::cout << receive_buf << std::endl;
@@ -293,7 +279,7 @@ int main(int argc, char **argv) {
 		// Stop Measurment
 
 		error =libusb_bulk_transfer(
-				m_device_handle,
+				m_usb_device_handle,
 				write_endpoint,
 				stop_continuous_scan,
 				sizeof(stop_continuous_scan),
@@ -312,7 +298,7 @@ int main(int argc, char **argv) {
 
 
 		error =libusb_bulk_transfer(
-				m_device_handle,
+				m_usb_device_handle,
 				read_endpoint,
 				receive_buf ,
 				sizeof(receive_buf)-1, // leave one for termination
@@ -335,7 +321,7 @@ int main(int argc, char **argv) {
 
 
 
-		error= libusb_release_interface(m_device_handle,interface_number);
+		error= libusb_release_interface(m_usb_device_handle,the_usb_interface_number);
 
 		if(error){
 
@@ -385,9 +371,9 @@ int main(int argc, char **argv) {
 
 
 
-	if( m_device_handle){
+	if( m_usb_device_handle){
 
-		libusb_close(m_device_handle);
+		libusb_close(m_usb_device_handle);
 
 	}
 
