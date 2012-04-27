@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
 
 	int init_result= libusb_init(&m_context);
 	if(init_result){
-		std::cerr << "USB init failed: "<< libusb_error_name(init_result) << std::endl;
+		std::cerr << "USB init failed: "<< init_result << std::endl;
 
 		exit(EXIT_FAILURE);
 	}
@@ -152,7 +152,7 @@ int main(int argc, char **argv) {
 			std::cout << "Error: Kernel driver found" << std::endl;
 
 			if (int error=libusb_detach_kernel_driver(m_usb_device_handle,the_usb_interface_number)){
-				std::cout << "Detaching Kernel Driver failed " << libusb_error_name(error) << std::endl;
+				std::cout << "Detaching Kernel Driver failed " << error << std::endl;
 				exit(EXIT_FAILURE);
 			}
 
@@ -166,7 +166,7 @@ int main(int argc, char **argv) {
 		int error = libusb_claim_interface(m_usb_device_handle,the_usb_interface_number);
 		if(error){
 
-			std::cout << "Claiming interface failed " << libusb_error_name(error) << std::endl;
+			std::cout << "Claiming interface failed " << error << std::endl;
 			exit(EXIT_FAILURE);
 
 		}
@@ -206,7 +206,7 @@ int main(int argc, char **argv) {
 
 			if(error){
 
-				std::cout << "Write Bulk Transfer failed " << libusb_error_name(error) << std::endl;
+				std::cout << "Write Bulk Transfer failed " << error << std::endl;
 				exit(EXIT_FAILURE);
 
 			}
@@ -225,7 +225,7 @@ int main(int argc, char **argv) {
 
 			if(error){
 
-				std::cout << "Read Bulk Transfer failed " << libusb_error_name(error) << std::endl;
+				std::cout << "Read Bulk Transfer failed " << error << std::endl;
 				exit(EXIT_FAILURE);
 
 			}
@@ -253,7 +253,7 @@ int main(int argc, char **argv) {
 
 			if(error){
 
-				std::cout << "Read Bulk Transfer failed " << libusb_error_name(error) << std::endl;
+				std::cout << "Read Bulk Transfer failed " << error << std::endl;
 				exit(EXIT_FAILURE);
 
 			}
@@ -288,7 +288,7 @@ int main(int argc, char **argv) {
 
 		if(error){
 
-			std::cout << "Write Bulk Transfer failed " << libusb_error_name(error) << std::endl;
+			std::cout << "Write Bulk Transfer failed " << error << std::endl;
 			exit(EXIT_FAILURE);
 
 		}
@@ -307,7 +307,7 @@ int main(int argc, char **argv) {
 
 		if(error){
 
-			std::cout << "Read Bulk Transfer failed " << libusb_error_name(error) << std::endl;
+			std::cout << "Read Bulk Transfer failed " << error << std::endl;
 			exit(EXIT_FAILURE);
 
 		}
@@ -325,7 +325,7 @@ int main(int argc, char **argv) {
 
 		if(error){
 
-			std::cout << "Releasing interface failed " << libusb_error_name(error) << std::endl;
+			std::cout << "Releasing interface failed " << error << std::endl;
 			exit(EXIT_FAILURE);
 
 		}
