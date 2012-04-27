@@ -319,56 +319,6 @@ int SickTim3xx::ProcessMessage(QueuePointer &resp_queue, player_msghdr* hdr,
 		return (0);
 	}
 
-	// Set Power
-	else if (Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ,
-			PLAYER_LASER_REQ_POWER, device_addr)) {
-
-//		player_laser_power_config_t* config =
-//				reinterpret_cast<player_laser_power_config_t *> (data);
-//
-//		if (config->state == 0) {
-//			lms100->StopMeasurement();
-//			laser_power_on = false;
-//		} else {
-//			lms100->StartMeasurement();
-//			laser_power_on = true;
-//		}
-
-		Publish(device_addr, resp_queue, PLAYER_MSGTYPE_RESP_ACK, hdr->subtype);
-		return (0);
-	}
-
-	// Set Configuration
-	else if (Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ,
-			PLAYER_LASER_REQ_SET_CONFIG, device_addr)) {
-
-		player_laser_config_t* config =
-				reinterpret_cast<player_laser_config_t *> (data);
-
-
-		// Setting {min, max}_angle, resolution (angular), and scanning_frequency
-//		angular_resolution = RTOD(config->resolution);
-//		min_angle = RTOD(config->min_angle);
-//		max_angle = RTOD(config->max_angle);
-//		scanning_frequency = config->scanning_frequency;
-
-		// Configuration failed; send a NACK
-		Publish(device_addr, resp_queue, PLAYER_MSGTYPE_RESP_NACK, hdr->subtype);
-		return (-1);
-	}
-
-	// Get Configuration
-	else if (Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ,
-			PLAYER_LASER_REQ_GET_CONFIG, device_addr)) {
-		// Get min_angle, max_angle, resolution and scanning_frequency
-		player_laser_config_t config; // = lms100->GetConfiguration();
-
-		Publish(device_addr, resp_queue, PLAYER_MSGTYPE_RESP_ACK,
-				PLAYER_LASER_REQ_GET_CONFIG, (void*) &config, sizeof(config),
-				NULL);
-		return (0);
-	}
-
 	// Get ID information
 	else if (Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ,
 			PLAYER_LASER_REQ_GET_ID, device_addr)) {
@@ -381,13 +331,6 @@ int SickTim3xx::ProcessMessage(QueuePointer &resp_queue, player_msghdr* hdr,
 		return (0);
 	}
 
-	// Set filter settings
-	else if (Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ,
-			PLAYER_LASER_REQ_SET_FILTER, device_addr)) {
-		PLAYER_WARN("> LMS100 driver doesn't support filters.");
-		return (-1);
-	} else
-		return (-1);
 }
 
 /**
@@ -411,10 +354,6 @@ void SickTim3xx::Main() {
 
 //			player_laser_data_t data; // = lms100->ReadMeasurement();
 //
-//			// Refresh data only if laser power is on
-//					Publish(device_addr, PLAYER_MSGTYPE_DATA,
-//							PLAYER_LASER_DATA_SCAN, &data);
-//
 //			player_laser_data_t_cleanup(&data);
 
 
@@ -437,23 +376,51 @@ void SickTim3xx::Main() {
 					std::cout << "Read Bulk Transfer failed " << error << std::endl;
 #endif
 
-
 					exit(EXIT_FAILURE);
 
 				}
 
-				//std::cout<< "Transfered Data read: " << transferred_data_size<< std::endl;
+				std::cout<< "Transfered Data read: " << transferred_data_size<< std::endl;
 
-				// String terminierung
+				// String Terminierung
 				receive_buf[transferred_data_size]=0;
 
 				if(receive_buf[0]!=DATA_STX){ // read from device buff until it is empty, and next data set starts with STX-Code
 					std::cout << ".";
-				}else{
-	//				std::cout << receive_buf << std::endl;
-					m_data_parser.set_pointer_to_data_buf(receive_buf,transferred_data_size);
-					m_data_parser.parse_data();
-					m_data_parser.print_data();
+				} else {
+
+				//Baustelle
+				player_laser_data_t playerData;
+				playerData.intensity = new uint8_t[0]; //Initializing to avoid getting an error when freeing the memory in the calling function - if this function returns with an error.
+				playerData.ranges = new float[0];
+
+				m_data_parser.set_pointer_to_data_buf(receive_buf,transferred_data_size);
+				m_data_parser.parse_data();
+				m_data_parser.print_data();
+
+				playerData.ranges_count = (uint32_t) (m_data_parser.datensatz_anzahl + 1);
+				playerData.ranges = new float[playerData.ranges_count];
+
+				int j = 0;
+				for (uint32_t i = 0; i < playerData.ranges_count; i++) {
+					j = i;
+					if (upside_down) {
+						j = playerData.ranges_count - i - 1;
+					}
+					playerData.ranges[i] = (((float) m_data_parser.dist_daten[j]) / m_data_parser.skalierungsfaktor);
+					if (playerData.ranges[i] == 0) {
+						playerData.ranges[i] = 4; //entspricht max range
+					}
+
+						fprintf(stdout, ">>> [%i] dist: %f\n", i, playerData.ranges[i]);
+				}
+
+				// Make data available
+				if (playerData.ranges_count != (unsigned int) -1)
+					Publish(device_addr, PLAYER_MSGTYPE_DATA,
+							PLAYER_LASER_DATA_SCAN, &playerData);
+
+				player_laser_data_t_cleanup(&playerData);
 
 				}
 
