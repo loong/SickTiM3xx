@@ -344,17 +344,11 @@ void SickTim3xx::Main() {
 
 		while (true) {
 
-//			std::cout << "Main loop" <<std::endl;
-
 			// test if we are supposed to cancel
 			pthread_testcancel();
 
 			// Request/replies handler
 			ProcessMessages();
-
-//			player_laser_data_t data; // = lms100->ReadMeasurement();
-//
-//			player_laser_data_t_cleanup(&data);
 
 
 			if(m_usb_device_handle){
@@ -390,16 +384,18 @@ void SickTim3xx::Main() {
 				} else {
 
 				//Baustelle
-				player_laser_data_t playerData;
-				playerData.intensity = new uint8_t[0]; //Initializing to avoid getting an error when freeing the memory in the calling function - if this function returns with an error.
-				playerData.ranges = new float[0];
 
 				m_data_parser.set_pointer_to_data_buf(receive_buf,transferred_data_size);
 				m_data_parser.parse_data();
 				m_data_parser.print_data();
 
+				player_laser_data_t playerData;
+
 				playerData.ranges_count = (uint32_t) (m_data_parser.datensatz_anzahl + 1);
 				playerData.ranges = new float[playerData.ranges_count];
+
+				playerData.intensity_count = 0;
+				playerData.intensity = new uint8_t[0]; //Initializing to avoid getting an error when freeing the memory in the calling function - if this function returns with an error.
 
 				int j = 0;
 				for (uint32_t i = 0; i < playerData.ranges_count; i++) {
@@ -407,7 +403,7 @@ void SickTim3xx::Main() {
 					if (upside_down) {
 						j = playerData.ranges_count - i - 1;
 					}
-					playerData.ranges[i] = (((float) m_data_parser.dist_daten[j]) / m_data_parser.skalierungsfaktor);
+					playerData.ranges[i] = (((float) m_data_parser.dist_daten[j]) / m_data_parser.skalierungsfaktor / 1000);
 					if (playerData.ranges[i] == 0) {
 						playerData.ranges[i] = 4; //entspricht max range
 					}
