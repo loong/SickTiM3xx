@@ -66,6 +66,12 @@
  )
  */
 
+
+// Some older Version of lib usb don't support libusb_error_name_funktion
+// in this case comment the following line
+//#define WITH_LIB_USB_ERROR_NAME
+
+
 #ifndef SICKLMS100_HPP_
 #define SICKLMS100_HPP_
 

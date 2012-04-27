@@ -81,8 +81,12 @@ int SickTim3xx::MainSetup() {
 
 	int init_result= libusb_init(&m_usb_context);
 	if(init_result){
-		std::cerr << "USB init failed: "<< libusb_error_name(init_result) << std::endl;
-
+		std::cerr << "USB init failed: "
+#if defined WITH_LIB_USB_ERROR_NAME
+				<< libusb_error_name(init_result) << std::endl;
+#else
+		<< init_result << std::endl;
+#endif
 //		exit(EXIT_FAILURE);
 	}
 
@@ -105,7 +109,11 @@ int SickTim3xx::MainSetup() {
 			PLAYER_WARN("> SICK TiM3xx: Open USB device failed");
 
 			if (int error=libusb_detach_kernel_driver(m_usb_device_handle,the_usb_interface_number)){
+#if defined WITH_LIB_USB_ERROR_NAME
 				PLAYER_ERROR1("> Detaching Kernel Driver failed: %s ", libusb_error_name(error) );
+#else
+				PLAYER_ERROR1("> Detaching Kernel Driver failed: %s ", error );
+#endif
 			}
 
 		}else{
@@ -117,12 +125,20 @@ int SickTim3xx::MainSetup() {
 		int error = libusb_claim_interface(m_usb_device_handle,the_usb_interface_number);
 		if(error){
 
+#if defined WITH_LIB_USB_ERROR_NAME
 			PLAYER_ERROR1("Claiming interface failed %s" , libusb_error_name(error));
+#else
+			PLAYER_ERROR1("Claiming interface failed %i" , error);
+#endif
 			error= libusb_release_interface(m_usb_device_handle,the_usb_interface_number);
 
 			if(error){
 
+#if defined WITH_LIB_USB_ERROR_NAME
 				PLAYER_ERROR1("Releasing interface failed: %s ", libusb_error_name(error));
+#else
+				PLAYER_ERROR1("Releasing interface failed: %i ", error);
+#endif
 
 			}
 			libusb_close(m_usb_device_handle);
@@ -154,9 +170,11 @@ int SickTim3xx::MainSetup() {
 				timeout_millis);
 
 		if(error){
-
+#if defined WITH_LIB_USB_ERROR_NAME
 			PLAYER_ERROR1("Write Bulk Transfer failed: %s" , libusb_error_name(error));
-
+#else
+			PLAYER_ERROR1("Write Bulk Transfer failed: %i" , error);
+#endif
 		}
 
 
@@ -202,7 +220,13 @@ void SickTim3xx::MainQuit() {
 
 		if(error){
 
+#if defined WITH_LIB_USB_ERROR_NAME
 			std::cout << "Write Bulk Transfer failed " << libusb_error_name(error) << std::endl;
+#else
+			std::cout << "Write Bulk Transfer failed: " << error << std::endl;
+#endif
+
+
 	//		exit(EXIT_FAILURE);
 
 		}
@@ -221,8 +245,12 @@ void SickTim3xx::MainQuit() {
 
 		if(error){
 
+#if defined WITH_LIB_USB_ERROR_NAME
 			std::cout << "Read Bulk Transfer failed " << libusb_error_name(error) << std::endl;
-	//		exit(EXIT_FAILURE);
+#else
+			std::cout << "Read Bulk Transfer failed " << error<< std::endl;
+#endif
+			//		exit(EXIT_FAILURE);
 
 		}
 
@@ -239,7 +267,11 @@ void SickTim3xx::MainQuit() {
 
 		if(error){
 
+#if defined WITH_LIB_USB_ERROR_NAME
 			std::cout << "Releasing interface failed " << libusb_error_name(error) << std::endl;
+#else
+			std::cout << "Releasing interface failed " << error << std::endl;
+#endif
 	//		exit(EXIT_FAILURE);
 
 		}
@@ -399,8 +431,13 @@ void SickTim3xx::Main() {
 						timeout_millis);
 
 				if(error){
-
+#if defined WITH_LIB_USB_ERROR_NAME
 					std::cout << "Read Bulk Transfer failed " << libusb_error_name(error) << std::endl;
+#else
+					std::cout << "Read Bulk Transfer failed " << error << std::endl;
+#endif
+
+
 					exit(EXIT_FAILURE);
 
 				}
