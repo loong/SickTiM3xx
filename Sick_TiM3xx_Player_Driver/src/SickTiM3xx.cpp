@@ -339,7 +339,6 @@ int SickTim3xx::ProcessMessage(QueuePointer &resp_queue, player_msghdr* hdr,
 void SickTim3xx::Main() {
 	// Start Continous measurements
 
-
 	std::cout << "Entering  Main loop execution " <<std::endl;
 
 		while (true) {
@@ -349,7 +348,6 @@ void SickTim3xx::Main() {
 
 			// Request/replies handler
 			ProcessMessages();
-
 
 			if(m_usb_device_handle){
 
@@ -374,8 +372,6 @@ void SickTim3xx::Main() {
 
 				}
 
-				std::cout<< "Transfered Data read: " << transferred_data_size<< std::endl;
-
 				// String Terminierung
 				receive_buf[transferred_data_size]=0;
 
@@ -391,9 +387,10 @@ void SickTim3xx::Main() {
 
 				player_laser_data_t playerData;
 
-				playerData.ranges_count = (uint32_t) (m_data_parser.datensatz_anzahl + 1);
+				playerData.ranges_count = (uint32_t) (m_data_parser.datensatz_anzahl);
 				playerData.ranges = new float[playerData.ranges_count];
 
+				//TODO Intensity
 				playerData.intensity_count = 0;
 				playerData.intensity = new uint8_t[0]; //Initializing to avoid getting an error when freeing the memory in the calling function - if this function returns with an error.
 
