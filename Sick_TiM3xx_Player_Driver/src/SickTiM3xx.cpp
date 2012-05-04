@@ -77,8 +77,6 @@ int SickTim3xx::MainSetup() {
 //					"> Userlevel %d has no permission to set configuration parameters.",
 //					userlevel);
 
-
-
 	int init_result= libusb_init(&m_usb_context);
 	if(init_result){
 		std::cerr << "USB init failed: "
@@ -319,6 +317,19 @@ int SickTim3xx::ProcessMessage(QueuePointer &resp_queue, player_msghdr* hdr,
 		return (0);
 	}
 
+	//TODO wird niemals aufgerufen !? (Breakpoint wird nicht erreicht)
+	// Get Configuration
+//		else if (Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ,
+//				PLAYER_LASER_REQ_GET_CONFIG, device_addr)) {
+//			// Get min_angle, max_angle, resolution and scanning_frequency --> ist in Main()
+//			player_laser_config_t config = playerConfig;
+//
+//			Publish(device_addr, resp_queue, PLAYER_MSGTYPE_RESP_ACK,
+//					PLAYER_LASER_REQ_GET_CONFIG, (void*) &config, sizeof(config),
+//					NULL);
+//			return (0);
+//		}
+
 	// Get ID information
 	else if (Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ,
 			PLAYER_LASER_REQ_GET_ID, device_addr)) {
@@ -348,6 +359,10 @@ void SickTim3xx::Main() {
 
 			// Request/replies handler
 			ProcessMessages();
+
+			player_laser_data_t playerData;
+			playerData.ranges_count = -1;
+
 
 			if(m_usb_device_handle){
 
@@ -384,11 +399,18 @@ void SickTim3xx::Main() {
 				m_data_parser.set_pointer_to_data_buf(receive_buf,transferred_data_size);
 				m_data_parser.parse_data();
 				m_data_parser.print_data();
-
-				player_laser_data_t playerData;
+//
+//				playerData.min_angle = (-90);
+//				playerData.max_angle = (90);
+//				playerData.resolution = (1);
+				playerData.min_angle = DTOR(-90);
+				playerData.max_angle = DTOR(90);
+				playerData.resolution = DTOR(1);
 
 				playerData.ranges_count = (uint32_t) (m_data_parser.datensatz_anzahl);
 				playerData.ranges = new float[playerData.ranges_count];
+
+				std::cout << playerData.ranges_count << std::endl;
 
 				//TODO Intensity
 				playerData.intensity_count = 0;
@@ -401,12 +423,14 @@ void SickTim3xx::Main() {
 						j = playerData.ranges_count - i - 1;
 					}
 					playerData.ranges[i] = (((float) m_data_parser.dist_daten[j]) / m_data_parser.skalierungsfaktor / 1000);
-					if (playerData.ranges[i] == 0) {
-						playerData.ranges[i] = 4; //entspricht max range
-					}
+//					if (playerData.ranges[i] == 0) {
+//						playerData.ranges[i] = 4; //entspricht max range
+//					}
 
 						fprintf(stdout, ">>> [%i] dist: %f\n", i, playerData.ranges[i]);
 				}
+
+				std::cout << "publish-" << std::endl;
 
 				// Make data available
 				if (playerData.ranges_count != (unsigned int) -1)
@@ -416,6 +440,8 @@ void SickTim3xx::Main() {
 				player_laser_data_t_cleanup(&playerData);
 
 				}
+
+				std::cout << "---publish" << std::endl;
 
 
 			}

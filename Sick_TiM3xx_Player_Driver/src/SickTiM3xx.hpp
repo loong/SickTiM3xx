@@ -127,11 +127,10 @@ private:
 
 	uint8_t receive_buf[2049];
 
-
-
 	libusb_device_handle* m_usb_device_handle;
 	libusb_context* m_usb_context;
 
+//	player_laser_config playerConfig;
 
 	TiM3xx_Data_Parser m_data_parser;
 
