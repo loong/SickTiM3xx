@@ -21,7 +21,6 @@ void TiM3xx_Data_Parser::set_pointer_to_data_buf(uint8_t* data_buf_ptr, int the_
 	actual_data_ptr=data_buf_ptr;
 	data_size=the_data_size;
 
-
 }
 
 
@@ -79,8 +78,6 @@ void TiM3xx_Data_Parser::parse_data(){
 			for(int i=0; i<271; i++){
 				ss >>  dist_daten[i];
 			}
-
-
 
 		}
 

@@ -7,14 +7,8 @@
 
 #include "SickTiM3xx.hpp"
 
-
-// Initialisation of static member vars
-
-	uint8_t SickTim3xx::start_continuous_scan[]={SickTim3xx::DATA_STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','1',SickTim3xx::DATA_ETX};
-	uint8_t SickTim3xx::stop_continuous_scan[]={SickTim3xx::DATA_STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','0',SickTim3xx::DATA_ETX};
-
-
-
+uint8_t SickTim3xx::start_continuous_scan[]={SickTim3xx::DATA_STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','1',SickTim3xx::DATA_ETX};
+uint8_t SickTim3xx::stop_continuous_scan[]={SickTim3xx::DATA_STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','0',SickTim3xx::DATA_ETX};
 
 /**
  * Constructor of the driver. Retrieve options from the configuration file and set
@@ -34,6 +28,10 @@ SickTim3xx::SickTim3xx(ConfigFile* cf, int section) :
 
 {
 
+	playerData.ranges_count = 271;
+	playerData.min_angle = DTOR(-90);
+	playerData.max_angle = DTOR(90);
+	playerData.resolution = DTOR(1);
 
 	// Laser geometry.
 	pose[0] = cf->ReadTupleLength(section, "pose", 0, 0.0);
@@ -140,14 +138,8 @@ int SickTim3xx::MainSetup() {
 
 			}
 			libusb_close(m_usb_device_handle);
-
 			m_usb_device_handle=0;
-
-
 		}
-
-
-
 	}
 
 
@@ -174,9 +166,6 @@ int SickTim3xx::MainSetup() {
 			PLAYER_ERROR1("Write Bulk Transfer failed: %i" , error);
 #endif
 		}
-
-
-
 	}
 
 	// Start the device thread
@@ -193,15 +182,10 @@ int SickTim3xx::MainSetup() {
  * returns nothing in player 3 !!
  */
 void SickTim3xx::MainQuit() {
-	// shutdown laser device
-//	StopThread();
-
 
 //		PLAYER_MSG0(1, "> SICK LMS100 driver shutting down... [done]");
 //		PLAYER_MSG0(1,
 //				"> SICK LMS100 driver shutting down correctly... [failed]");
-
-
 
 	// Stop Measurment
 	if(m_usb_device_handle){
@@ -360,13 +344,7 @@ void SickTim3xx::Main() {
 			// Request/replies handler
 			ProcessMessages();
 
-			player_laser_data_t playerData;
-			playerData.ranges_count = -1;
-
-
 			if(m_usb_device_handle){
-
-				std::cout << "Starting bulk transfer" << std::endl;
 
 				int error =libusb_bulk_transfer(
 						m_usb_device_handle,
@@ -394,27 +372,21 @@ void SickTim3xx::Main() {
 					std::cout << ".";
 				} else {
 
-				//Baustelle
-
 				m_data_parser.set_pointer_to_data_buf(receive_buf,transferred_data_size);
 				m_data_parser.parse_data();
-				m_data_parser.print_data();
-//
-//				playerData.min_angle = (-90);
-//				playerData.max_angle = (90);
-//				playerData.resolution = (1);
-				playerData.min_angle = DTOR(-90);
-				playerData.max_angle = DTOR(90);
-				playerData.resolution = DTOR(1);
 
 				playerData.ranges_count = (uint32_t) (m_data_parser.datensatz_anzahl);
-				playerData.ranges = new float[playerData.ranges_count];
 
-				std::cout << playerData.ranges_count << std::endl;
+				playerData.ranges = ranges;
 
 				//TODO Intensity
-				playerData.intensity_count = 0;
-				playerData.intensity = new uint8_t[0]; //Initializing to avoid getting an error when freeing the memory in the calling function - if this function returns with an error.
+				playerData.intensity_count = (uint32_t) 271;
+
+				playerData.intensity = new uint8_t[271]; //Initializing to avoid getting an error when freeing the memory in the calling function - if this function returns with an error.
+
+				for (int i = 0; i < 271; ++i) {
+					playerData.intensity[i] = (uint8_t )100;
+				}
 
 				int j = 0;
 				for (uint32_t i = 0; i < playerData.ranges_count; i++) {
@@ -423,30 +395,21 @@ void SickTim3xx::Main() {
 						j = playerData.ranges_count - i - 1;
 					}
 					playerData.ranges[i] = (((float) m_data_parser.dist_daten[j]) / m_data_parser.skalierungsfaktor / 1000);
-//					if (playerData.ranges[i] == 0) {
-//						playerData.ranges[i] = 4; //entspricht max range
-//					}
-
+					if (playerData.ranges[i] == 0) {
+						playerData.ranges[i] = 4; //entspricht max range
+					}
+					if(debug){
 						fprintf(stdout, ">>> [%i] dist: %f\n", i, playerData.ranges[i]);
+					}
 				}
 
-				std::cout << "publish-" << std::endl;
-
-				// Make data available
-				if (playerData.ranges_count != (unsigned int) -1)
-					Publish(device_addr, PLAYER_MSGTYPE_DATA,
-							PLAYER_LASER_DATA_SCAN, &playerData);
-
-				player_laser_data_t_cleanup(&playerData);
-
-				}
-
-				std::cout << "---publish" << std::endl;
+				Publish(device_addr, PLAYER_MSGTYPE_DATA, PLAYER_LASER_DATA_SCAN, &playerData);
 
 
 			}
-
 		}
+
+	}
 }
 
 /**
