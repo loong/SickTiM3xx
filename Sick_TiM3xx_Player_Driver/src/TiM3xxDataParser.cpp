@@ -43,7 +43,7 @@ void TiM3xx_Data_Parser::parse_data(){
 				int32_t i32;
 				float fl;
 			} m_caster;
-			;
+
 			actual_data_ptr++;
 			std::stringstream ss((const char*)actual_data_ptr);
 
@@ -66,6 +66,8 @@ void TiM3xx_Data_Parser::parse_data(){
 			ss >> scanfrequenz;
 			ss >> messfrequenz;
 			ss >> drehgeberanzahl;
+
+			//Distanz Daten
 			ss >> kanalzahl;
 			ss >> dist_kennung; // DIST1
 			ss >> m_caster.ui32;
@@ -79,6 +81,23 @@ void TiM3xx_Data_Parser::parse_data(){
 				ss >>  dist_daten[i];
 			}
 
+			//Intensitätsdaten
+			ss >> intens_kanalzahl;
+			ss >> intens_messdateninhalt;
+			ss >> m_caster.ui32;
+				intens_skalierungsfaktor = m_caster.fl;
+			ss >> skalierungsoffset;
+			ss >> m_caster.ui32;
+				intens_startwinkel = m_caster.i32; // zahntausendstel grad
+			ss >> intens_winkelschrittweite; // zahntausendstel grad
+			ss >> intens_datensatz_anzahl;
+//			ss >> std::hex;
+//			uint32_t temp;
+			for(int i=0; i<68; i++){
+//				ss >> temp;
+				ss >> intens_daten[i];
+			}
+
 		}
 
 	}
@@ -88,9 +107,6 @@ void TiM3xx_Data_Parser::parse_data(){
 
 
 void TiM3xx_Data_Parser::print_data(){
-
-
-	std::cout.precision(5);
 
 	std::cout << kommandoart << ":"
 			<< kommando << ":"
@@ -107,15 +123,28 @@ void TiM3xx_Data_Parser::print_data(){
 			<< skalierungsoffset<< ":"
 			<< std::dec << startwinkel<< ":"
 			<< winkelschrittweite<< ":"
-			<< std::dec << datensatz_anzahl <<":";
+			<< std::dec << datensatz_anzahl <<":"
+
+			<< intens_kanalzahl << ":"
+			<< intens_messdateninhalt << ":"
+			<< std::hex <<  intens_skalierungsfaktor<< ":"
+			<< intens_skalierungsoffset<< ":"
+			<< std::dec << intens_startwinkel<< ":"
+			<< intens_winkelschrittweite<< ":"
+			<< std::dec << intens_datensatz_anzahl <<":";
 
 //			std::cout << std::hex;
 
+			std::cout << std::endl << "DistDaten:   ";
 			for(int i=0; i<271; i++){
 				std::cout << dist_daten[i] <<"|";
 			}
 
+			std::cout << std::endl << "IntensDaten: ";
+			for(int i=0; i<271; i++){
+				std::cout <<(int) intens_daten[i] <<"|";
+			}
 
-			std::cout <<std::endl;
+			std::cout << std::endl << "----------------------------------------" << std::endl;
 
 }

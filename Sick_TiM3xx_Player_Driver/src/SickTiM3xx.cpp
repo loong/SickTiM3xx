@@ -334,20 +334,9 @@ void SickTim3xx::Main() {
 				m_data_parser.set_pointer_to_data_buf(receive_buf,transferred_data_size);
 				m_data_parser.parse_data();
 
+				//Distances
 				playerData.ranges_count = (uint32_t) (m_data_parser.datensatz_anzahl);
-
-				std::cout<< "Ranges Count: " << playerData.ranges_count << std::endl;
-
 				playerData.ranges = ranges;
-
-//TODO Intensity !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				playerData.intensity_count = (uint32_t) playerData.ranges_count;
-
-				playerData.intensity = &intensity[0]; //Initializing to avoid getting an error when freeing the memory in the calling function - if this function returns with an error.
-
-				for (unsigned int i = 0; i < playerData.intensity_count; i++) {
-					playerData.intensity[i] = (uint8_t )100;
-				}
 
 				int j = 0;
 				for (uint32_t i = 0; i < playerData.ranges_count; i++) {
@@ -361,6 +350,22 @@ void SickTim3xx::Main() {
 					}
 					if(debug){
 						fprintf(stdout, ">>> [%i] dist: %f\n", i, playerData.ranges[i]);
+					}
+				}
+
+				//Intensities
+				playerData.intensity_count = (uint32_t) (m_data_parser.intens_datensatz_anzahl);
+				playerData.intensity = intensities;
+
+				j = 0;
+				for (uint32_t i = 0; i < playerData.intensity_count; i++) {
+					j = i;
+					if (upside_down) {
+						j = playerData.intensity_count - i - 1;
+					}
+					playerData.intensity[i] = m_data_parser.intens_daten[j];
+					if(debug){
+						fprintf(stdout, ">>> [%i] dist: %f\n", i, playerData.intensity[i]);
 					}
 				}
 
