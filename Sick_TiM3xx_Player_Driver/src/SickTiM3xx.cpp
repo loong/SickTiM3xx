@@ -62,19 +62,6 @@ int SickTim3xx::MainSetup() {
 
 	std::cout << "SickTiM3xx::MainSetup()" << std::endl;
 
-
-//		PLAYER_ERROR2("> Connecting to SICK LMS100 on [%s:%d]...[failed]",
-//		PLAYER_MSG2(1, "> Connecting to SICK LMS100 on [%s:%d]... [done]",
-//			hostname, port);
-//				PLAYER_WARN(
-//						"> Couldn't configure resolution, frequency, and min/max angle. Using previously set values... [failed]");
-//				PLAYER_MSG0(1,
-//						"> Configuring resolution, frequency and min/max angle... [done]");
-//
-//				PLAYER_WARN1(
-//					"> Userlevel %d has no permission to set configuration parameters.",
-//					userlevel);
-
 	int init_result= libusb_init(&m_usb_context);
 	if(init_result){
 		std::cerr << "USB init failed: "
