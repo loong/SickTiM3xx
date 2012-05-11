@@ -57,6 +57,7 @@ CXXFLAGS = -O2 -g -Wall -fmessage-length=0 -fPIC\
 all: 					\
 	libusb_test			\
 	libsicktim3xx.so	\
+	TiM_client_test
 
 # $< der Name der Ersten Abhängigkeit  
 # $@ der Name des Targets 
@@ -64,7 +65,9 @@ all: 					\
 
 libusb_test: libusb_test.cpp $(OBJS) 
 	$(CXX)  $(CXXFLAGS) $< $(OBJS_AND_PATH) -o ../bin/$@
-		
+	
+TiM_client_test: TiM_client_test.cpp $(OBJS) 
+	$(CXX)  $(CXXFLAGS) $< $(OBJS_AND_PATH) -o ../bin/$@
 
 
 
