@@ -133,6 +133,8 @@ private:
 
 	player_laser_data_t playerData;
 	float ranges[270];
+	uint8_t intensity[270];
+
 	TiM3xx_Data_Parser m_data_parser;
 
 	// Laser pose in robot coordinate system.

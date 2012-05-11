@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
 	while(1){
 		client.Read();
 		for (int i = 0; i < 271; ++i) {
-			cout << laser[i] << endl;
+			cout << "i: " << i << " - " << laser[i] << endl;
 		}
 	}
 }

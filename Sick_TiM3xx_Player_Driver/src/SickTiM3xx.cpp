@@ -28,10 +28,13 @@ SickTim3xx::SickTim3xx(ConfigFile* cf, int section) :
 
 {
 
-	playerData.ranges_count = 271;
-	playerData.min_angle = DTOR(-90);
-	playerData.max_angle = DTOR(90);
+	bzero(&playerData,sizeof(player_laser_data_t));
+
+	playerData.ranges_count = 270;
+	playerData.min_angle = DTOR(-135);
+	playerData.max_angle = DTOR(135);
 	playerData.resolution = DTOR(1);
+	playerData.intensity_count =270;
 
 	// Laser geometry.
 	pose[0] = cf->ReadTupleLength(section, "pose", 0, 0.0);
@@ -129,7 +132,6 @@ int SickTim3xx::MainSetup() {
 		}
 	}
 
-
 	// Send start Measurement cmd
 
 	std::cout << "Main Setup:Send start Measurment" << std::endl;
@@ -155,11 +157,6 @@ int SickTim3xx::MainSetup() {
 		}
 	}
 
-	// Start the device thread
-//	StartThread();
-	std::cout << "Main Setup: ends here" << std::endl;
-
-
 	return (0);
 }
 
@@ -169,11 +166,6 @@ int SickTim3xx::MainSetup() {
  * returns nothing in player 3 !!
  */
 void SickTim3xx::MainQuit() {
-
-//		PLAYER_MSG0(1, "> SICK LMS100 driver shutting down... [done]");
-//		PLAYER_MSG0(1,
-//				"> SICK LMS100 driver shutting down correctly... [failed]");
-
 	// Stop Measurment
 	if(m_usb_device_handle){
 
@@ -202,8 +194,6 @@ void SickTim3xx::MainQuit() {
 
 		std::cout<< "Transfered Data written: " << transferred_data_size<< std::endl;
 
-
-
 		error =libusb_bulk_transfer(
 				m_usb_device_handle,
 				read_endpoint,
@@ -223,14 +213,10 @@ void SickTim3xx::MainQuit() {
 
 		}
 
-
-
 		std::cout<< "Transfered Data read: " << transferred_data_size<< std::endl;
 		// String terminierung
 		receive_buf[transferred_data_size]=0;
 		std::cout << receive_buf << std::endl;
-
-
 
 		error= libusb_release_interface(m_usb_device_handle,the_usb_interface_number);
 
@@ -288,19 +274,6 @@ int SickTim3xx::ProcessMessage(QueuePointer &resp_queue, player_msghdr* hdr,
 		return (0);
 	}
 
-	//TODO wird niemals aufgerufen !? (Breakpoint wird nicht erreicht)
-	// Get Configuration
-//		else if (Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ,
-//				PLAYER_LASER_REQ_GET_CONFIG, device_addr)) {
-//			// Get min_angle, max_angle, resolution and scanning_frequency --> ist in Main()
-//			player_laser_config_t config = playerConfig;
-//
-//			Publish(device_addr, resp_queue, PLAYER_MSGTYPE_RESP_ACK,
-//					PLAYER_LASER_REQ_GET_CONFIG, (void*) &config, sizeof(config),
-//					NULL);
-//			return (0);
-//		}
-
 	// Get ID information
 	else if (Message::MatchMessage(hdr, PLAYER_MSGTYPE_REQ,
 			PLAYER_LASER_REQ_GET_ID, device_addr)) {
@@ -316,10 +289,9 @@ int SickTim3xx::ProcessMessage(QueuePointer &resp_queue, player_msghdr* hdr,
 }
 
 /**
- * Main function for device thread
+ * Continous measurements
  */
 void SickTim3xx::Main() {
-	// Start Continous measurements
 
 	std::cout << "Entering  Main loop execution " <<std::endl;
 
@@ -364,14 +336,16 @@ void SickTim3xx::Main() {
 
 				playerData.ranges_count = (uint32_t) (m_data_parser.datensatz_anzahl);
 
+				std::cout<< "Ranges Count: " << playerData.ranges_count << std::endl;
+
 				playerData.ranges = ranges;
 
-				//TODO Intensity
-				playerData.intensity_count = (uint32_t) 271;
+//TODO Intensity !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				playerData.intensity_count = (uint32_t) playerData.ranges_count;
 
-				playerData.intensity = new uint8_t[271]; //Initializing to avoid getting an error when freeing the memory in the calling function - if this function returns with an error.
+				playerData.intensity = &intensity[0]; //Initializing to avoid getting an error when freeing the memory in the calling function - if this function returns with an error.
 
-				for (int i = 0; i < 271; ++i) {
+				for (unsigned int i = 0; i < playerData.intensity_count; i++) {
 					playerData.intensity[i] = (uint8_t )100;
 				}
 
