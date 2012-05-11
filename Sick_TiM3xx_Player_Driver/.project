@@ -83,4 +83,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>player-3.0</name>
+			<type>2</type>
+			<location>/usr/local/include/player-3.0</location>
+		</link>
+	</linkedResources>
 </projectDescription>

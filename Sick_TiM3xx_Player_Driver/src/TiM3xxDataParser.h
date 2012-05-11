@@ -45,14 +45,24 @@ public:
 	uint32_t scanfrequenz;
 	uint32_t messfrequenz;
 	uint16_t drehgeberanzahl;
+
 	uint16_t kanalzahl;
 	char dist_kennung[6]; // DIST1
-	int32_t skalierungsfaktor;
+	float skalierungsfaktor;
 	uint32_t skalierungsoffset;
 	int32_t startwinkel; // zahntausendstel grad
 	uint16_t winkelschrittweite; // zahntausendstel grad
 	uint16_t datensatz_anzahl;
 	uint16_t dist_daten[271];
+
+	uint16_t intens_kanalzahl;
+	char intens_messdateninhalt[6]; // RSSI1
+	float intens_skalierungsfaktor;
+	uint32_t intens_skalierungsoffset;
+	int32_t intens_startwinkel; // zahntausendstel grad
+	uint16_t intens_winkelschrittweite; // zahntausendstel grad
+	uint16_t intens_datensatz_anzahl;
+	uint8_t intens_daten[271];
 
 
 
