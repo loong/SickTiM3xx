@@ -1,10 +1,3 @@
-/*
- * SickLMS100.cpp
- *
- *  Created on: 08.09.2010
- *      Author: asterix
- */
-
 #include "SickTiM3xx.hpp"
 
 uint8_t SickTim3xx::start_continuous_scan[]={SickTim3xx::DATA_STX,'s','E','N',' ','L','M','D','s','c','a','n','d','a','t','a',' ','1',SickTim3xx::DATA_ETX};
@@ -30,6 +23,7 @@ SickTim3xx::SickTim3xx(ConfigFile* cf, int section) :
 
 	bzero(&playerData,sizeof(player_laser_data_t));
 
+	//TODO does it really work?
 	playerData.ranges_count = 270;
 	playerData.min_angle = DTOR(-135);
 	playerData.max_angle = DTOR(135);
@@ -49,21 +43,14 @@ SickTim3xx::SickTim3xx(ConfigFile* cf, int section) :
 	upside_down = cf->ReadBool(section, "upside_down", 0);
 }
 
-/**
- * Destructor
- */
-SickTim3xx::~SickTim3xx() {
-
-}
+SickTim3xx::~SickTim3xx() {}
 
 /**
- * Set up the LMS100
+ * Set up the Laser, init USB Communication
  *
  * @return 0 if successful, -1 otherwise
  */
 int SickTim3xx::MainSetup() {
-
-	std::cout << "SickTiM3xx::MainSetup()" << std::endl;
 
 	int init_result= libusb_init(&m_usb_context);
 	if(init_result){
@@ -76,10 +63,7 @@ int SickTim3xx::MainSetup() {
 //		exit(EXIT_FAILURE);
 	}
 
-
 	libusb_set_debug(m_usb_context,3);
-
-
 
 	m_usb_device_handle = libusb_open_device_with_vid_pid(m_usb_context, VENDOR_ID, PRODUCT_ID);
 	if( !m_usb_device_handle){
@@ -106,7 +90,6 @@ int SickTim3xx::MainSetup() {
 			PLAYER_MSG0(1, "> No Kernel driver for attached Device found, thas's good, libusb handels the device");
 		}
 
-
 		// Now we claim the device
 		int error = libusb_claim_interface(m_usb_device_handle,the_usb_interface_number);
 		if(error){
@@ -132,13 +115,9 @@ int SickTim3xx::MainSetup() {
 		}
 	}
 
-	// Send start Measurement cmd
-
-	std::cout << "Main Setup:Send start Measurment" << std::endl;
-
 	if(m_usb_device_handle ){
 
-		std::cout << "Main Setup:Send start Measurment 2" << std::endl;
+		std::cout << "Main Setup: Send start measurment message" << std::endl;
 
 		int error =libusb_bulk_transfer(
 				m_usb_device_handle,
@@ -161,8 +140,7 @@ int SickTim3xx::MainSetup() {
 }
 
 /**
- * Shut down the LMS100
- *
+ * Shut down the Laser
  * returns nothing in player 3 !!
  */
 void SickTim3xx::MainQuit() {
@@ -186,13 +164,9 @@ void SickTim3xx::MainQuit() {
 #else
 			std::cout << "Write Bulk Transfer failed: " << error << std::endl;
 #endif
-
-
 	//		exit(EXIT_FAILURE);
 
 		}
-
-		std::cout<< "Transfered Data written: " << transferred_data_size<< std::endl;
 
 		error =libusb_bulk_transfer(
 				m_usb_device_handle,
@@ -203,25 +177,20 @@ void SickTim3xx::MainQuit() {
 				timeout_millis);
 
 		if(error){
-
 #if defined WITH_LIB_USB_ERROR_NAME
 			std::cout << "Read Bulk Transfer failed " << libusb_error_name(error) << std::endl;
 #else
 			std::cout << "Read Bulk Transfer failed " << error<< std::endl;
 #endif
 			//		exit(EXIT_FAILURE);
-
 		}
 
-		std::cout<< "Transfered Data read: " << transferred_data_size<< std::endl;
-		// String terminierung
+		// String Termination
 		receive_buf[transferred_data_size]=0;
-		std::cout << receive_buf << std::endl;
 
 		error= libusb_release_interface(m_usb_device_handle,the_usb_interface_number);
 
 		if(error){
-
 #if defined WITH_LIB_USB_ERROR_NAME
 			std::cout << "Releasing interface failed " << libusb_error_name(error) << std::endl;
 #else
@@ -231,11 +200,8 @@ void SickTim3xx::MainQuit() {
 
 		}
 
-
 		if( m_usb_device_handle){
-
 			libusb_close(m_usb_device_handle);
-
 		}
 	}
 
@@ -305,7 +271,8 @@ void SickTim3xx::Main() {
 
 			if(m_usb_device_handle){
 
-				int error =libusb_bulk_transfer(
+				//Bulk Data
+				int error = libusb_bulk_transfer(
 						m_usb_device_handle,
 						read_endpoint,
 						receive_buf ,
@@ -319,9 +286,7 @@ void SickTim3xx::Main() {
 #else
 					std::cout << "Read Bulk Transfer failed " << error << std::endl;
 #endif
-
 					exit(EXIT_FAILURE);
-
 				}
 
 				// String Terminierung
